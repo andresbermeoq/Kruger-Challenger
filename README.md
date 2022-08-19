@@ -50,7 +50,6 @@ Los roles usuario estan prestablecidos dentro de `resources/import.sql`
 
 ### Api Rest Administrador
 
-![Modelo Crear](/img/crear.png)
 
 ### Errores
 
