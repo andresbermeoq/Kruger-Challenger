@@ -8,5 +8,5 @@ public interface AbstractService<T, I> {
 	public T saveEntity(T entity);
 	public T findById(I id);
 	public T updateEntity(I id, T entity);
-	public T deleteEntity(I id);
+	public void deleteEntity(I id);
 }

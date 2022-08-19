@@ -10,15 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kruger.dto.CreateEmployeeDto;
 import com.kruger.dto.MessageDto;
-import com.kruger.models.Employee;
 import com.kruger.services.EmployeeService;
 
 
@@ -41,7 +43,7 @@ public class EmployeeController {
 	}
 	
 	
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	public ResponseEntity<?> createEmployee(@Valid @RequestBody CreateEmployeeDto employeeDto, BindingResult result){
 		if (result.hasErrors()) {
 			return validated(result);
@@ -58,7 +60,31 @@ public class EmployeeController {
 	public ResponseEntity<?> listAllEmployees() {
 		return ResponseEntity.status(HttpStatus.OK).body(employeeService.findAll());
 	}
-
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteEmployee(@Valid @PathVariable String id) {
+		
+		try {
+			employeeService.deleteEntity(Long.parseLong(id));
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new MessageDto("BORRADO CORRECTAMENTE"));			
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new MessageDto("ERROR EN EL PATH"));
+		}
+		
+	}
+	
+	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateEmployee(@RequestBody CreateEmployeeDto employee, BindingResult result, @PathVariable String id)  {
+		if (result.hasErrors()) {
+			return validated(result);
+		}
+		
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEntity(Long.parseLong(id), employee.ToEmployee()));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 
 
 }

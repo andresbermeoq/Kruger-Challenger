@@ -1,15 +1,19 @@
 package com.kruger.models;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,14 +37,27 @@ public class Vaccine implements Serializable {
     private String vaccineType;
     
     @Column(name="vaccine_date", nullable=false)
-    private OffsetDateTime vaccineDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate vaccineDate;
     
     @Column(name="vaccine_number", nullable=false, precision=10)
-    private int vaccineNumber;
+    private Integer vaccineNumber;
     
-    @ManyToOne(optional=false)
-    @JoinColumn(name="vaccine_user", nullable=false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Employee.class)
+    @JoinColumn(name="vaccine_employee", referencedColumnName = "id_user")
     private Employee employee;
 
+	public Vaccine(String vaccineType, LocalDate vaccineDate, Integer vaccineNumber, Employee employee) {
+		super();
+		this.vaccineType = vaccineType;
+		this.vaccineDate = vaccineDate;
+		this.vaccineNumber = vaccineNumber;
+		this.employee = employee;
+	}
+
+	public Vaccine() {
+		super();
+	}
     
 }

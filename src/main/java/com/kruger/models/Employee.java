@@ -1,9 +1,10 @@
 package com.kruger.models;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +19,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -55,26 +58,33 @@ public class Employee implements Serializable {
     private String dni;
     
     @Column(name="employee_date_birthday")
-    private OffsetDateTime dateBirthday;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate dateBirthday;
     
     @Column(name="employee_mobile", length=10)
     private String mobile;
-    @Column(name="employee_status_vaccine", length=15)
-    private String statusVaccine;
     
-    @OneToMany(mappedBy="employee")
-    private Set<Vaccine> vaccines;
+    @Column(name="employee_address", nullable=false, length=250)
+    private String address;
+    
+    @Column(name="employee_status_vaccine", length=15)
+    private boolean statusVaccine;
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Vaccine> vaccines;
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_user")
     private User user;
     
     @PrePersist
     public void prePersist() {
-    	this.dateBirthday = OffsetDateTime.now();
+    	this.dateBirthday = LocalDate.now();
+    	this.address = "";
     	this.mobile = "";
-    	this.statusVaccine = "No Vacunado";
+    	this.statusVaccine = false;
     }
 
 	public Employee(String name, String lastName, String email, String dni) {

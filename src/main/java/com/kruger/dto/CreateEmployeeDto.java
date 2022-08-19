@@ -1,11 +1,16 @@
 package com.kruger.dto;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.kruger.models.Employee;
+import com.kruger.models.Vaccine;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +39,26 @@ public class CreateEmployeeDto {
 	@Size(min = 10, max = 10, message = "El dni debe tener 10 digitos")
 	private String cedula;
 	
+	
+	private LocalDate fechaNacimiento;
+	private String direccion;
+	private String telefonoCelular;
+	private boolean estadoVacunas;
+	
+	private List<Vaccine> vacunas = new ArrayList<>();
+	
 	public Employee ToEmployee() {
-		return new Employee().setName(nombre).setLastName(apellido).setEmail(email).setDni(cedula);
+		return new Employee().setName(nombre).setLastName(apellido).setEmail(email).setDni(cedula)
+							 .setDateBirthday(fechaNacimiento).setAddress(direccion).setMobile(telefonoCelular)
+							 .setStatusVaccine(estadoVacunas).setVaccines(vacunas);
+	}
+	
+
+	@Override
+	public String toString() {
+		return "CreateEmployeeDto [nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", cedula="
+				+ cedula + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + ", telefonoCelular="
+				+ telefonoCelular + ", estadoVacunas=" + estadoVacunas + ", vacunas=" + vacunas + "]";
 	}
 	
 

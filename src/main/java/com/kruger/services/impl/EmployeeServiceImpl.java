@@ -1,5 +1,6 @@
 package com.kruger.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kruger.models.Employee;
 import com.kruger.models.User;
+import com.kruger.models.Vaccine;
 import com.kruger.repositories.EmployeeRepository;
 import com.kruger.repositories.RoleRepository;
 import com.kruger.repositories.UserRepository;
@@ -40,20 +42,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional
 	public Employee saveEntity(Employee entity) {
 		
-		User user = new User();
-		
 		String username = entity.getName().charAt(0) + entity.getLastName();
-		user.setUsername(username);
-		user.setPassword(username);
-		user.setRole(roleRepository.findByName("ROLE_USER"));
-		
-		userRepository.save(user);
-		
-		
-		entity.setUser(userRepository.findByUsername(username));
+		String password = "Password";
+				
+		entity.setUser(getEmployeeUser(username, password));
 		
 		return employeeRepository.saveAndFlush(entity);
 	}
+
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -66,23 +62,59 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public Employee updateEntity(Long id, Employee entity) {
-		return saveEntity(entity);
+		Employee actualEmployee = findById(id);
+		
+		actualEmployee.setDateBirthday(entity.getDateBirthday());
+		actualEmployee.setMobile(entity.getMobile());
+		actualEmployee.setAddress(entity.getAddress());
+		actualEmployee.setStatusVaccine(entity.isStatusVaccine());
+		
+		if (actualEmployee.isStatusVaccine()) {
+			List<Vaccine> vacunas = new ArrayList<>(); 
+			
+			for (Vaccine vaccine: entity.getVaccines()) {
+				System.out.println("Vacuna -> " + vaccine);
+				vacunas.add(new Vaccine(vaccine.getVaccineType(), vaccine.getVaccineDate(), vaccine.getVaccineNumber(), actualEmployee));
+			}
+			
+			actualEmployee.setVaccines(vacunas);
+		}
+			
+		return employeeRepository.save(actualEmployee);
 	}
 
 	@Override
-	public Employee deleteEntity(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public void deleteEntity(Long id) {
+		employeeRepository.deleteById(id);
 	}
 	
+	@Transactional(readOnly = true)
 	public boolean existsUsername(String username) {
 		if (userRepository.findByUsername(username) != null) {
 			return true;
 		}
 		return false;
 	}
-
 	
+	public boolean existsUserById(Long id) {
+		if (employeeRepository.findById(id) != null) {
+			System.out.println("No existe");
+			return true;
+		}
+		return false;
+	}
 
+	private User getEmployeeUser(String username, String password) {
+		User user = new User();
+		
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setRole(roleRepository.findByName("ROLE_USER"));
+		
+		return userRepository.save(user);
+	}
+	
 }
