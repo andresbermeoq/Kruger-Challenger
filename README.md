@@ -66,6 +66,9 @@ Se implemento Spring Fox para la documentacion de la Api Rest, tambien dentro de
 }
 ```
 
+**Nota:** El usuario creado es la primera letra del nombre y el apellido `CMoreno` y el password es la cedula.
+
+
 ### Actualizacion Empleado con Vacunas
 
 ```json

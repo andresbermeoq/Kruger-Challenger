@@ -37,6 +37,7 @@ public class CreateEmployeeDto {
 	
 	@NotEmpty(message = "La cedula es requerida.")
 	@Size(min = 10, max = 10, message = "El dni debe tener 10 digitos")
+	@Pattern(regexp = "^[0-9,$]*$" , message = "La cedula solo debe contener numeros")
 	private String cedula;
 	
 	

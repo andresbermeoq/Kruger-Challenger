@@ -54,7 +54,12 @@ public class EmployeeController {
 			return validated(result);
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.saveEntity(employeeDto.ToEmployee()));
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.saveEntity(employeeDto.ToEmployee()));			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDto("CEDULA YA EXISTE"));
+		}
+		
 	}
 	
 	@ApiOperation(value = EMPLOYEE_LIST)
