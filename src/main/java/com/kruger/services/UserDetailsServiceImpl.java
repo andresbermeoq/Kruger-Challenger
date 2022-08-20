@@ -25,6 +25,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		User user = userRepository.findByUsername(username);
 		
+		System.out.println("USUARIO -> " + user);
+		
 		if (user == null) {
 			logger.error("Error en el login: No existe el usuario" + username);
 			throw new UsernameNotFoundException("Error en el login: No existe el usuario" + username);

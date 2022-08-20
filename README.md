@@ -44,7 +44,7 @@ El Server Backend utiliza las siguientes **Librerias:**
 
 ![Modelo de Datos](/img/diagrama.png)
 
-Los roles usuario estan prestablecidos dentro de `resources/import.sql`
+El modelo de datos se encuentra de la carpeta `DataModel`.
 
 
 ## Funcionamiento
