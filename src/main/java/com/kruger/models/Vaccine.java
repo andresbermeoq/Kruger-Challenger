@@ -3,6 +3,7 @@ package com.kruger.models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,14 +21,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Entity(name="Krugger_Vaccine")
+@Table(name="Kruger_Vaccine")
+@Entity
 @Accessors(chain = true)
 @Getter
 @Setter
 public class Vaccine implements Serializable {
 
-    
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,8 +46,8 @@ public class Vaccine implements Serializable {
     private Integer vaccineNumber;
     
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Employee.class)
-    @JoinColumn(name="vaccine_employee", referencedColumnName = "id_user")
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Employee.class)
+    @JoinColumn(name="vaccine_employee", referencedColumnName = "employee_id")
     private Employee employee;
 
 	public Vaccine(String vaccineType, LocalDate vaccineDate, Integer vaccineNumber, Employee employee) {
@@ -58,6 +60,12 @@ public class Vaccine implements Serializable {
 
 	public Vaccine() {
 		super();
+	}
+	
+	@Override
+	public String toString() {
+		return "Vaccine [id=" + id + ", vaccineType=" + vaccineType + ", vaccineDate=" + vaccineDate
+				+ ", vaccineNumber=" + vaccineNumber + "]";
 	}
     
 }

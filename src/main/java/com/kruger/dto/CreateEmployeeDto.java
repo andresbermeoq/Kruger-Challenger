@@ -43,7 +43,7 @@ public class CreateEmployeeDto {
 	private LocalDate fechaNacimiento;
 	private String direccion;
 	private String telefonoCelular;
-	private boolean estadoVacunas;
+	private String estadoVacunas;
 	
 	private List<Vaccine> vacunas = new ArrayList<>();
 	

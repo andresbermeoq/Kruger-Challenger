@@ -17,6 +17,7 @@ El Server Backend utiliza las siguientes **Librerias:**
 - Lombok
 - Spring Jpa
 - Spring Data Validation
+- Spring Fox
 
 
 ## Tiempo estimado de trabajo

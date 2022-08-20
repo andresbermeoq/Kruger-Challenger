@@ -28,7 +28,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Entity
-@Table(name="Kruger_Employee", indexes={@Index(name="Kruger_Employee_employee_dni_IX", columnList="employee_dni", unique=true)})
+@Table(name="KRUGER_EMPLOYEE", indexes={@Index(name="Kruger_Employee_employee_dni_IX", columnList="employee_dni", unique=true)})
 @Accessors(chain = true)
 @Getter
 @Setter
@@ -38,7 +38,7 @@ public class Employee implements Serializable {
     
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id_user", unique=true, nullable=false, precision=19)
+    @Column(name="employee_id", unique=true, nullable=false, precision=19)
     private Long id;
 	
     @Column(name="employee_name", nullable=false, length=100)
@@ -68,7 +68,7 @@ public class Employee implements Serializable {
     private String address;
     
     @Column(name="employee_status_vaccine", length=15)
-    private boolean statusVaccine;
+    private String statusVaccine;
     
     @JsonManagedReference
     @OneToMany(mappedBy="employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -84,7 +84,7 @@ public class Employee implements Serializable {
     	this.dateBirthday = LocalDate.now();
     	this.address = "";
     	this.mobile = "";
-    	this.statusVaccine = false;
+    	this.statusVaccine = "No Vacunado";
     }
 
 	public Employee(String name, String lastName, String email, String dni) {

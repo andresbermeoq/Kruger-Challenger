@@ -1,5 +1,3 @@
-// Generated with g9.
-
 package com.kruger.models;
 
 import java.io.Serializable;
@@ -14,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,7 +20,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Entity(name="Kruger_User")
+@Table(name="KRUGER_USER")
+@Entity
 @Accessors(chain = true)
 @Getter
 @Setter
