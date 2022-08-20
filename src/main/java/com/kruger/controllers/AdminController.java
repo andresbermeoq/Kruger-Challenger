@@ -38,16 +38,21 @@ public class AdminController {
 	@ApiOperation(value = ADMIN_LIST_TYPE)
 	@GetMapping(value = "/tipo")
 	public ResponseEntity<?> listByType(@RequestBody Map<String, String> typeVaccine) {
-		return ResponseEntity.status(HttpStatus.OK).body(employeeService.findByTypeVaccine(typeVaccine.get("tipo")));		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(employeeService.findByTypeVaccine(typeVaccine.get("tipo")));	
+		
 	}
 	
 	@ApiOperation(value = ADMIN_LIST_RANGE)
 	@GetMapping(value = "/rango")
 	public ResponseEntity<?> listByRange(@RequestBody Map<String, String> datesVaccine) {
+		
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate iniciaLocalDate = LocalDate.parse(datesVaccine.get("fechaInicio"), dateTimeFormatter);
 		LocalDate finalLocalDate = LocalDate.parse(datesVaccine.get("fechaFin"), dateTimeFormatter);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(employeeService.findByRangeDate(iniciaLocalDate, finalLocalDate));
+		
 	}
 
 }

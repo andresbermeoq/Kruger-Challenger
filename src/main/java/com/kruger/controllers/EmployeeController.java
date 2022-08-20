@@ -54,11 +54,7 @@ public class EmployeeController {
 			return validated(result);
 		}
 		
-		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.saveEntity(employeeDto.ToEmployee()));			
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.saveEntity(employeeDto.ToEmployee()));
 	}
 	
 	@ApiOperation(value = EMPLOYEE_LIST)

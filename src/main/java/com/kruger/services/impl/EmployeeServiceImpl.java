@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -44,13 +48,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee saveEntity(Employee entity) {
 		
 		String username = entity.getName().charAt(0) + entity.getLastName();
-		String password = "Password";
+		String password = passwordEncoder.encode(entity.getDni());
 				
 		entity.setUser(getEmployeeUser(username, password));
 		
 		return employeeRepository.saveAndFlush(entity);
 	}
-
+	
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -122,7 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		user.setUsername(username);
 		user.setPassword(password);
-		user.setRole(roleRepository.findByName("ROLE_USER"));
+		user.setRole(roleRepository.findByName("USER"));
 		
 		return userRepository.save(user);
 	}
