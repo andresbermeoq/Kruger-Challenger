@@ -40,7 +40,7 @@ El Server Backend utiliza las siguientes **Librerias:**
 - Existen dos tipos de Roles: ['ROLE_ADMIN', 'ROLE_USER']
 - Por lo tanto se establece que cada usuario va a tener un solo rol ya sea Admin o User.
 - Si tiene el rol usuario, se establece que pertenece a un empleado.
-- El empleado establece un booleano que especifica si el empleado ingresa o no una lista de vacunas.
+- El empleado establece si esta o no vacunado para especificar si el empleado ingresa o no una lista de vacunas.
 
 ![Modelo de Datos](/img/diagrama.png)
 
