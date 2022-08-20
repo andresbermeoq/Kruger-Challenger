@@ -46,14 +46,25 @@ El Server Backend utiliza las siguientes **Librerias:**
 
 El modelo de datos se encuentra de la carpeta `DataModel`.
 
+El usuario dentro de la base de datos es:
+
+```info
+Database: Vacunation
+User: user_kruger
+password: user1234.
+```
+
 
 ## Funcionamiento
 
 Se implemento Spring Fox para la documentacion de la Api Rest, tambien dentro del archivo `resources/import.sql` se creo automaticamente un usuario admin con los siguientes valores
 
+```info
 **username**: aBermeo
 
 **password**: 0150384980
+```
+
 
 ### Creacion de un Empleado
 
