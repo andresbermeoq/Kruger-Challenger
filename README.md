@@ -107,7 +107,7 @@ Se implemento Spring Fox para la documentacion de la Api Rest, tambien dentro de
 
 ## Documentacion
 Se puede acceder a la documentacion de Spring Fox utilizando el siguiente enlance
-link:[Swagger](http://localhost:8080/swagger-ui.html#/)
+link: [Swagger](http://localhost:8080/swagger-ui.html#/)
 
 ![Documentacion](/img/documentacion.png)
 
@@ -155,6 +155,12 @@ Finalmente se obtiene un token que se debe ser incluido en todos los `endpoints`
 Cada endpoint debe ser previamente autenticado usando este token.
 
 ![Endpoint](/img/end.png)
+
+### Articulos de interes utilizado
+
+[Authentication based in roles](https://www.devglan.com/spring-security/spring-oauth2-role-based-authorization)
+
+[Spring Security using OAUTH2 with JWT](https://www.pixeltrice.com/spring-boot-security-using-oauth2-with-jwt/)
 
 
 ## Errores
